@@ -1,0 +1,752 @@
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #EEF2F7;
+      --warm-white: #F8FAFD;
+      --ink: #0F1923;
+      --brown: #1A2B3C;
+      --amber: #1D6EAA;
+      --amber-light: #2A88CC;
+      --accent: #E8622A;
+      --accent-light: #F07848;
+      --muted: #5A7080;
+      --rule: #C8D6E0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--warm-white);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      padding: 1.5rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(250, 247, 242, 0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 80px;
+    }
+
+    .hero-left {
+      background: var(--brown);
+      padding: 8rem 5rem 6rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2rem;
+    }
+
+    .hero-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 5vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      color: var(--cream);
+      margin-bottom: 2rem;
+    }
+
+    .hero-headline em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(245, 240, 232, 0.65);
+      max-width: 380px;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      padding: 1rem 2.2rem;
+      background: var(--accent);
+      color: white;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      align-self: flex-start;
+    }
+
+    .hero-cta:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+    }
+
+    .hero-right {
+      background: var(--cream);
+      padding: 8rem 5rem 6rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-left: 1px solid var(--rule);
+    }
+
+    .hero-stat {
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .hero-stat:first-child { border-top: 1px solid var(--rule); }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .about-section {
+      background: var(--warm-white);
+      padding: 7rem 4rem;
+    }
+
+    .about-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .section-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .section-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--brown);
+      margin-bottom: 1.5rem;
+    }
+
+    .section-headline em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .about-text p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      margin-bottom: 1.4rem;
+      line-height: 1.85;
+    }
+
+    .about-text p strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .about-pull {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--brown);
+      line-height: 1.5;
+      padding: 2.5rem;
+      border-left: 3px solid var(--accent);
+      background: var(--cream);
+    }
+
+    .services-section {
+      padding: 7rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--rule);
+      border: 1.5px solid var(--rule);
+      margin-top: 3rem;
+    }
+
+    .service-card {
+      background: var(--warm-white);
+      padding: 2.5rem;
+      transition: background 0.2s;
+    }
+
+    .service-card:hover { background: var(--cream); }
+
+    .service-icon {
+      font-size: 1.5rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .service-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--brown);
+      margin-bottom: 0.8rem;
+    }
+
+    .service-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .samples-section {
+      background: var(--cream);
+      padding: 7rem 4rem;
+    }
+
+    .samples-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .samples-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .sample-card {
+      background: var(--warm-white);
+      border: 1px solid var(--rule);
+      padding: 2.5rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .sample-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(44, 31, 20, 0.08);
+    }
+
+    .sample-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(232, 98, 42, 0.08);
+      padding: 0.3rem 0.8rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .sample-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--brown);
+      margin-bottom: 0.8rem;
+      line-height: 1.3;
+    }
+
+    .sample-excerpt {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+
+    .sample-client {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-top: 1px solid var(--rule);
+      padding-top: 1rem;
+    }
+
+    .testimonials-section {
+      background: var(--brown);
+      padding: 7rem 4rem;
+    }
+
+    .testimonials-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .testimonials-inner .section-headline { color: var(--cream); }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .testimonial-card {
+      border: 1px solid rgba(245, 240, 232, 0.1);
+      padding: 2.5rem;
+    }
+
+    .testimonial-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: var(--accent);
+      opacity: 0.2;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-text {
+      font-size: 0.88rem;
+      color: rgba(245, 240, 232, 0.4);
+      line-height: 1.85;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: 0.3;
+    }
+
+    .contact-section {
+      background: var(--warm-white);
+      padding: 7rem 4rem;
+    }
+
+    .contact-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .contact-left p {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.85;
+      margin-bottom: 2rem;
+    }
+
+    .contact-channels {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-channel {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.2rem 1.5rem;
+      background: var(--cream);
+      border: 1px solid var(--rule);
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 0.9rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .contact-channel:hover {
+      border-color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    .contact-channel-icon {
+      font-size: 1.2rem;
+      width: 2rem;
+      text-align: center;
+    }
+
+    .contact-channel-label {
+      font-weight: 400;
+      color: var(--muted);
+      font-size: 0.78rem;
+      display: block;
+      margin-bottom: 0.1rem;
+    }
+
+    .contact-channel-value {
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .form-input, .form-textarea {
+      background: var(--cream);
+      border: 1px solid var(--rule);
+      padding: 0.9rem 1.2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    .form-input:focus, .form-textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 130px;
+    }
+
+    .form-submit {
+      padding: 1rem 2.2rem;
+      background: var(--accent);
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      align-self: flex-start;
+    }
+
+    .form-submit:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+    }
+
+    footer {
+      background: var(--ink);
+      padding: 2.5rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--cream);
+      font-weight: 700;
+    }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: rgba(245, 240, 232, 0.35);
+    }
+
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 2rem; }
+      .nav-links { gap: 1.5rem; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 7rem 2.5rem 4rem; }
+      .hero-right { padding: 3rem 2.5rem 5rem; }
+      .about-inner, .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .about-section, .services-section, .samples-section, .testimonials-section, .contact-section { padding: 5rem 2rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .samples-grid, .testimonials-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 0.8rem; text-align: center; padding: 2rem; }
+    }
+</style>
+
+<nav>
+  <a href="#" class="nav-logo">Thomas Myers</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Copywriter & Brand Voice Strategist</p>
+    <h1 class="hero-headline">Words that<br>actually <em>sound</em><br>like you.</h1>
+    <p class="hero-sub">Most copy sounds like it came from a template. Yours won't. I write for businesses that have a real personality and want their customers to feel it.</p>
+    <a href="#contact" class="hero-cta">Let's Talk</a>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stat-block">
+      <div class="hero-stat">
+        <div class="stat-number">20+</div>
+        <div class="stat-label">Years in the hospitality industry — I know service culture from the inside out.</div>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-number">ATL</div>
+        <div class="stat-label">Based in Atlanta. Writing for businesses everywhere.</div>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-number">0</div>
+        <div class="stat-label">Generic templates. Every piece is written for your brand, your voice, your people.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="about-section" id="about">
+  <div class="about-inner">
+    <div class="about-text">
+      <span class="section-eyebrow">About</span>
+      <h2 class="section-headline">I spent 20 years learning what<br><em>keeps people coming back.</em></h2>
+      <p>Before I wrote a word of copy, I spent two decades in Atlanta's hospitality industry — behind the bar, managing teams, and running the operation as a GM. I learned something in those years that no marketing textbook teaches: <strong>people don't come back for the product. They come back for how you make them feel.</strong></p>
+      <p>That's what I bring to every piece of writing I do. Whether it's an email campaign for a neighborhood bar, a content series for a fitness brand, or outreach copy for a service business — I write the way real people talk. Not the way brands talk.</p>
+      <p>If your copy sounds like it could belong to any business, it belongs to none of them. Let's change that.</p>
+    </div>
+    <div class="about-pull">
+      "Most businesses know what they do. Very few know how to say it in a way that makes someone feel something. That gap is where I work."
+    </div>
+  </div>
+</div>
+
+<div class="services-section" id="services">
+  <span class="section-eyebrow">Services</span>
+  <h2 class="section-headline">What I do.</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">✉️</div>
+      <div class="service-title">Email Marketing</div>
+      <div class="service-desc">Sequences, campaigns, and newsletters that sound like they came from a person — because they did. Built to keep your customers engaged and coming back.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📣</div>
+      <div class="service-title">Brand Voice & Messaging</div>
+      <div class="service-desc">If you've ever struggled to explain what makes you different, this is where we start. I help you find the words that are uniquely, unmistakably yours.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📱</div>
+      <div class="service-title">Social & Content Copy</div>
+      <div class="service-desc">Captions, posts, and content series that build community instead of just filling a feed. Real voice, real engagement.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🍺</div>
+      <div class="service-title">Hospitality Copywriting</div>
+      <div class="service-desc">Bars, restaurants, and hospitality brands are my home turf. I write for this world the way someone who's lived it writes — because I have.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🚀</div>
+      <div class="service-title">Launch & Outreach Copy</div>
+      <div class="service-desc">Cold outreach, launch sequences, and sales emails that open doors without feeling like a pitch. Conversational. Direct. Effective.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💬</div>
+      <div class="service-title">Website Copy</div>
+      <div class="service-desc">Your website is often the first impression. I write pages that get to the point, sound like you, and give people a reason to keep reading.</div>
+    </div>
+  </div>
+</div>
+
+<div class="samples-section" id="work">
+  <div class="samples-inner">
+    <span class="section-eyebrow">Work</span>
+    <h2 class="section-headline">Writing that does something.</h2>
+    <div class="samples-grid">
+      <div class="sample-card">
+        <span class="sample-tag">Newsletter</span>
+        <h3 class="sample-title">Loud Music, Beer & A New Hype Drop — Hop City Beer & Wine</h3>
+        <p class="sample-excerpt">Co-wrote Hop City's weekly newsletter with the Krog Bar manager — a personality-driven deep dive into beer and cider pairings matched with music. The kind of copy that makes you feel like you're talking to a real person, not a brand.</p>
+        <p class="sample-client">Hop City Beer & Wine / Newsletter — July 2025</p>
+      </div>
+      <div class="sample-card">
+        <span class="sample-tag">Brand Storytelling</span>
+        <h3 class="sample-title">From Dishwasher to James Beard Award Winner — The Busy Bee Cafe</h3>
+        <p class="sample-excerpt">A profile of Tracy Gates and Atlanta's most iconic soul food institution. Written for @atltheindustry's ATL Industry History Series — the kind of storytelling that makes people feel the weight of a place before they ever walk through the door.</p>
+        <p class="sample-client">@atltheindustry / ATL Industry History Series</p>
+      </div>
+      <div class="sample-card">
+        <span class="sample-tag">Cold Outreach</span>
+        <h3 class="sample-title">Outreach Copy — Atlanta Hospitality Venues</h3>
+        <p class="sample-excerpt">Conversational cold outreach written for bars and restaurants across Atlanta — personal, specific, and built to start real conversations. The kind of message that gets read because it doesn't sound like marketing.</p>
+        <p class="sample-client">Hospitality / Outreach Copy</p>
+      </div>
+      <div class="sample-card">
+        <span class="sample-tag">Coming Soon</span>
+        <h3 class="sample-title">More Work on the Way</h3>
+        <p class="sample-excerpt">This portfolio is growing. If you want to see something specific — an email sequence, a brand voice sample, a social series — just ask. Happy to put something together for your industry.</p>
+        <p class="sample-client">Get in touch below ↓</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="testimonials-section">
+  <div class="testimonials-inner">
+    <span class="section-eyebrow" style="color: var(--accent);">Kind Words</span>
+    <h2 class="section-headline" style="color: var(--cream);">What people say.</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">Testimonials are earned, not invented. This space is reserved for real clients with real results. That list is growing — check back soon.</p>
+        <p class="testimonial-author">— Coming soon</p>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">Want to be the first? Reach out below and let's build something worth talking about.</p>
+        <p class="testimonial-author">— Your business here</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <span class="section-eyebrow">Contact</span>
+      <h2 class="section-headline">Let's figure out<br>if we're a <em>fit.</em></h2>
+      <p>No pressure, no pitch. Just a quick conversation about what you're working on and whether I can help. Fifteen minutes is usually enough to know.</p>
+      <div class="contact-channels">
+        <a href="mailto:atltheindustry@gmail.com" class="contact-channel">
+          <span class="contact-channel-icon">✉️</span>
+          <div>
+            <span class="contact-channel-label">Email</span>
+            <span class="contact-channel-value">atltheindustry@gmail.com</span>
+          </div>
+        </a>
+        <a href="https://instagram.com/thomasmyers81" target="_blank" class="contact-channel">
+          <span class="contact-channel-icon">📸</span>
+          <div>
+            <span class="contact-channel-label">Instagram</span>
+            <span class="contact-channel-value">@thomasmyers81</span>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div>
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label class="form-label" for="name">Your Name</label>
+          <input class="form-input" type="text" id="name" placeholder="First and last name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="business">Business / Brand</label>
+          <input class="form-input" type="text" id="business" placeholder="What's the name of your business?">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address</label>
+          <input class="form-input" type="email" id="email" placeholder="Where should I reply?" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="message">What are you working on?</label>
+          <textarea class="form-textarea" id="message" placeholder="Tell me a little about your business and what you need. No need to be formal." required></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send It →</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-name">Thomas Myers — Copywriter</span>
+  <span class="footer-copy">© 2026. Atlanta, Georgia.</span>
+</footer>
+
+<script>
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = 'Message Sent ✓';
+    btn.style.background = '#1A2B3C';
+    btn.style.color = '#EEF2F7';
+    e.target.reset();
+    setTimeout(() => {
+      btn.textContent = 'Send It →';
+      btn.style.background = '';
+      btn.style.color = '';
+    }, 3000);
+  }
+</script>
