@@ -705,7 +705,7 @@
     }
 
     // FORM SUBMIT
-    function handleSubmit() {
+    async function handleSubmit() {
       const first = document.getElementById('firstName').value.trim();
       const last = document.getElementById('lastName').value.trim();
       const email = document.getElementById('email').value.trim();
@@ -721,19 +721,34 @@
         return;
       }
 
-      // Save locally
-      const signups = JSON.parse(localStorage.getItem('atl_waitlist') || '[]');
-      signups.push({ first, last, email, role, type: selectedRole, date: new Date().toISOString() });
-      localStorage.setItem('atl_waitlist', JSON.stringify(signups));
+      try {
+        const response = await fetch('https://formspree.io/f/mnjbweok', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            firstName: first,
+            lastName: last,
+            email: email,
+            role: role,
+            type: selectedRole
+          })
+        });
 
-      // Increment counter
-      signupCount++;
-      localStorage.setItem('atl_signups', signupCount);
-      document.getElementById('count-signups').textContent = signupCount;
+        if (response.ok) {
+          // Increment counter
+          signupCount++;
+          localStorage.setItem('atl_signups', signupCount);
+          document.getElementById('count-signups').textContent = signupCount;
 
-      // Show success
-      document.getElementById('signup-form').style.display = 'none';
-      document.getElementById('success-box').style.display = 'block';
+          // Show success
+          document.getElementById('signup-form').style.display = 'none';
+          document.getElementById('success-box').style.display = 'block';
+        } else {
+          alert('Something went wrong. Please try again.');
+        }
+      } catch (error) {
+        alert('Something went wrong. Please try again.');
+      }
     }
 
     // SCROLL ANIMATIONS
