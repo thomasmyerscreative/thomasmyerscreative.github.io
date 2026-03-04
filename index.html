@@ -1,776 +1,947 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ATL Industry Job Board — Coming Soon</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thomas Myers — Copywriter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --gold: #FFFFFF;
-      --gold-light: #E8E8E8;
-      --black: #0A0E1A;
-      --dark: #0D1424;
-      --card: #13274F;
-      --border: #1E3A6E;
-      --white: #FFFFFF;
-      --muted: #9AACCC;
-      --red: #CE1141;
+      --cream: #EEF2F7;
+      --warm-white: #F8FAFD;
+      --ink: #0F1923;
+      --brown: #1A2B3C;
+      --amber: #1D6EAA;
+      --amber-light: #2A88CC;
+      --accent: #E8622A;
+      --accent-light: #F07848;
+      --muted: #5A7080;
+      --rule: #C8D6E0;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--black);
-      color: var(--white);
+      background: var(--warm-white);
+      color: var(--ink);
       font-family: 'DM Sans', sans-serif;
-      min-height: 100vh;
+      font-weight: 300;
+      line-height: 1.7;
       overflow-x: hidden;
     }
 
-    /* GRAIN OVERLAY */
+    /* ── NOISE TEXTURE OVERLAY ── */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
       pointer-events: none;
-      z-index: 0;
+      z-index: 100;
       opacity: 0.4;
     }
 
-    /* NAV */
+    /* ── NAV ── */
     nav {
       position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 20px 40px;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      padding: 1.5rem 4rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 2px solid var(--gold);
-      background: rgba(10,14,26,0.9);
+      background: rgba(250, 247, 242, 0.88);
       backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--rule);
     }
 
     .nav-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.4rem;
-      letter-spacing: 0.12em;
-      color: var(--gold);
-    }
-
-    .nav-tag {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--muted);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-
-    /* HERO */
-    .hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 120px 24px 80px;
-      overflow: hidden;
-    }
-
-    /* BG CIRCLES */
-    .hero::after {
-      content: '';
-      position: absolute;
-      width: 700px; height: 700px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(206,17,65,0.06) 0%, rgba(19,39,79,0.3) 50%, transparent 70%);
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(206,17,65,0.15);
-      border: 1px solid rgba(206,17,65,0.4);
-      border-radius: 100px;
-      padding: 6px 16px;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.18em;
-      color: var(--red);
-      text-transform: uppercase;
-      margin-bottom: 36px;
-      animation: fadeUp 0.8s ease both;
-    }
-
-    .badge span { width: 6px; height: 6px; background: var(--red); border-radius: 50%; animation: pulse 2s infinite; }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.8); }
-    }
-
-    h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(3.5rem, 12vw, 9rem);
-      line-height: 0.9;
-      letter-spacing: 0.03em;
-      color: var(--gold);
-      margin-bottom: 12px;
-      animation: fadeUp 0.8s 0.1s ease both;
-    }
-
-    h1 em {
-      font-style: normal;
-      color: var(--red);
-      display: block;
-    }
-
-    .hero-sub {
-      font-size: clamp(1rem, 2.5vw, 1.3rem);
-      color: var(--muted);
-      font-weight: 300;
-      max-width: 540px;
-      line-height: 1.7;
-      margin: 28px auto 0;
-      animation: fadeUp 0.8s 0.2s ease both;
-    }
-
-    .hero-sub strong { color: var(--white); font-weight: 500; }
-
-    /* FORM */
-    .signup-wrap {
-      margin-top: 56px;
-      width: 100%;
-      max-width: 560px;
-      animation: fadeUp 0.8s 0.35s ease both;
-    }
-
-    .role-select {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 16px;
-      justify-content: center;
-    }
-
-    .role-btn {
-      flex: 1;
-      padding: 11px 16px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--muted);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s;
-      letter-spacing: 0.02em;
-    }
-
-    .role-btn:hover { border-color: var(--gold); color: var(--gold); }
-    .role-btn.active {
-      background: rgba(231,168,1,0.15);
-      border-color: var(--gold);
-      color: var(--gold);
-    }
-
-    .form-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    select {
-      flex: 1;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--white);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.9rem;
-      padding: 14px 16px;
-      outline: none;
-      transition: border-color 0.2s;
-      -webkit-appearance: none;
-    }
-
-    input::placeholder { color: #555; }
-    input:focus, select:focus { border-color: var(--gold); }
-
-    select option { background: var(--dark); }
-
-    .submit-btn {
-      width: 100%;
-      padding: 16px;
-      background: var(--red);
-      border: none;
-      border-radius: 8px;
-      color: var(--white);
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.2rem;
-      letter-spacing: 0.12em;
-      cursor: pointer;
-      transition: all 0.2s;
-      margin-top: 4px;
-    }
-
-    .submit-btn:hover {
-      background: #E8183F;
-      transform: translateY(-1px);
-      box-shadow: 0 8px 30px rgba(206,17,65,0.35);
-    }
-
-    .submit-btn:active { transform: translateY(0); }
-
-    .form-note {
-      font-size: 0.72rem;
-      color: #555;
-      text-align: center;
-      margin-top: 12px;
-      font-family: 'DM Mono', monospace;
-      letter-spacing: 0.05em;
-    }
-
-    /* SUCCESS STATE */
-    .success-box {
-      display: none;
-      background: rgba(206,17,65,0.08);
-      border: 1px solid rgba(206,17,65,0.4);
-      border-radius: 12px;
-      padding: 32px;
-      text-align: center;
-    }
-
-    .success-box .check {
-      font-size: 2.5rem;
-      margin-bottom: 12px;
-    }
-
-    .success-box h3 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.8rem;
-      letter-spacing: 0.08em;
-      color: var(--gold);
-      margin-bottom: 8px;
-    }
-
-    .success-box p {
-      color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.6;
-    }
-
-    /* COUNTER */
-    .counter-section {
-      padding: 60px 24px;
-      text-align: center;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      background: var(--dark);
-    }
-
-    .counter-wrap {
-      display: flex;
-      justify-content: center;
-      gap: 60px;
-      flex-wrap: wrap;
-    }
-
-    .counter-item { text-align: center; }
-
-    .counter-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 3.5rem;
-      color: var(--gold);
-      line-height: 1;
-      display: block;
-    }
-
-    .counter-label {
-      font-size: 0.75rem;
-      color: var(--muted);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      font-family: 'DM Mono', monospace;
-      margin-top: 4px;
-      display: block;
-    }
-
-    /* WHY SECTION */
-    .why-section {
-      padding: 100px 24px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 20px;
-    }
-
-    .section-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.5rem, 6vw, 5rem);
-      line-height: 1;
-      letter-spacing: 0.04em;
-      margin-bottom: 60px;
-    }
-
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-top: 3px solid var(--red);
-      border-radius: 12px;
-      padding: 32px;
-      transition: border-color 0.3s, transform 0.3s;
-    }
-
-    .card:hover {
-      border-color: var(--red);
-      border-top-color: var(--red);
-      transform: translateY(-4px);
-    }
-
-    .card-icon {
-      font-size: 2rem;
-      margin-bottom: 20px;
-      display: block;
-    }
-
-    .card h3 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.4rem;
-      letter-spacing: 0.06em;
-      color: var(--gold);
-      margin-bottom: 10px;
-    }
-
-    .card p {
-      color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.7;
-    }
-
-    /* FOR WHO */
-    .who-section {
-      background: var(--dark);
-      padding: 100px 24px;
-    }
-
-    .who-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      align-items: start;
-    }
-
-    .who-block {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--red);
-      border-radius: 16px;
-      padding: 40px;
-    }
-
-    .who-block h3 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
-      letter-spacing: 0.06em;
-      margin-bottom: 24px;
-      color: var(--gold);
-    }
-
-    .who-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .who-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      font-size: 0.9rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .who-list li::before {
-      content: '→';
-      color: var(--gold);
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    /* FOOTER CTA */
-    .footer-cta {
-      padding: 120px 24px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .footer-cta::before {
-      content: 'ATL';
-      position: absolute;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 30vw;
-      color: rgba(212,168,67,0.03);
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      white-space: nowrap;
-    }
-
-    .footer-cta h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.5rem, 7vw, 6rem);
-      letter-spacing: 0.04em;
-      line-height: 1;
-      margin-bottom: 24px;
-      position: relative;
-    }
-
-    .footer-cta p {
-      color: var(--muted);
-      font-size: 1rem;
-      margin-bottom: 40px;
-      position: relative;
-    }
-
-    .footer-cta .submit-btn {
-      max-width: 320px;
-      margin: 0 auto;
-      display: block;
-      position: relative;
-      font-size: 1.3rem;
-      padding: 18px;
-    }
-
-    /* FOOTER */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 32px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-
-    footer .logo {
-      font-family: 'Bebas Neue', sans-serif;
+      font-family: 'Playfair Display', serif;
       font-size: 1.1rem;
-      letter-spacing: 0.12em;
-      color: var(--gold);
-    }
-
-    footer p {
-      font-size: 0.75rem;
-      color: #444;
-      font-family: 'DM Mono', monospace;
-    }
-
-    footer a {
-      color: var(--gold);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--ink);
       text-decoration: none;
     }
 
-    /* ANIMATIONS */
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--amber); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 80px;
+    }
+
+    .hero-left {
+      background: var(--brown);
+      padding: 8rem 5rem 6rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      right: -60px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: var(--amber);
+      opacity: 0.08;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.2s;
+    }
+
+    .hero-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 5vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      color: var(--cream);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.4s;
+    }
+
+    .hero-headline em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(245, 240, 232, 0.65);
+      max-width: 380px;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.6s;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      padding: 1rem 2.2rem;
+      background: var(--accent);
+      color: white;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.8s;
+      align-self: flex-start;
+    }
+
+    .hero-cta:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+    }
+
+    .hero-right {
+      background: var(--cream);
+      padding: 8rem 5rem 6rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-left: 1px solid var(--rule);
+    }
+
+    .hero-stat-block {
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.5s;
+    }
+
+    .hero-stat {
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .hero-stat:first-child { border-top: 1px solid var(--rule); }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    /* ── SECTION BASE ── */
+    section {
+      padding: 7rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-rule {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-bottom: 3rem;
+    }
+
+    .section-rule::before {
+      content: '';
+      width: 2.5rem;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    .section-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .section-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--brown);
+      margin-bottom: 1.5rem;
+    }
+
+    .section-headline em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    /* ── ABOUT ── */
+    .about-section {
+      background: var(--warm-white);
+      max-width: 100%;
+      padding: 7rem 0;
+    }
+
+    .about-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .about-text p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      margin-bottom: 1.4rem;
+      line-height: 1.85;
+    }
+
+    .about-text p strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .about-pull {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--brown);
+      line-height: 1.5;
+      padding: 2.5rem;
+      border-left: 3px solid var(--accent);
+      background: var(--cream);
+    }
+
+    /* ── SERVICES ── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--rule);
+      border: 1.5px solid var(--rule);
+      margin-top: 3rem;
+    }
+
+    .service-card {
+      background: var(--warm-white);
+      padding: 2.5rem;
+      transition: background 0.2s;
+    }
+
+    .service-card:hover { background: var(--cream); }
+
+    .service-icon {
+      font-size: 1.5rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .service-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--brown);
+      margin-bottom: 0.8rem;
+    }
+
+    .service-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    /* ── SAMPLES ── */
+    .samples-section {
+      background: var(--cream);
+      max-width: 100%;
+      padding: 7rem 0;
+    }
+
+    .samples-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 4rem;
+    }
+
+    .samples-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .sample-card {
+      background: var(--warm-white);
+      border: 1px solid var(--rule);
+      padding: 2.5rem;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .sample-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(44, 31, 20, 0.08);
+    }
+
+    .sample-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(232, 98, 42, 0.08);
+      padding: 0.3rem 0.8rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .sample-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--brown);
+      margin-bottom: 0.8rem;
+      line-height: 1.3;
+    }
+
+    .sample-excerpt {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+
+    .sample-client {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--rule);
+      border-top: 1px solid var(--rule);
+      padding-top: 1rem;
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-section {
+      background: var(--brown);
+      max-width: 100%;
+      padding: 7rem 0;
+    }
+
+    .testimonials-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 4rem;
+    }
+
+    .testimonials-inner .section-headline { color: var(--cream); }
+    .testimonials-inner .section-eyebrow { color: var(--accent); }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .testimonial-card {
+      border: 1px solid rgba(245, 240, 232, 0.1);
+      padding: 2.5rem;
+      position: relative;
+    }
+
+    .testimonial-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-text {
+      font-size: 0.95rem;
+      color: rgba(245, 240, 232, 0.75);
+      line-height: 1.85;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .testimonial-placeholder {
+      font-size: 0.82rem;
+      color: rgba(245, 240, 232, 0.3);
+      font-style: italic;
+    }
+
+    /* ── CONTACT ── */
+    .contact-section {
+      background: var(--warm-white);
+      max-width: 100%;
+      padding: 7rem 0;
+    }
+
+    .contact-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .contact-left p {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.85;
+      margin-bottom: 2rem;
+    }
+
+    .contact-channels {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-channel {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.2rem 1.5rem;
+      background: var(--cream);
+      border: 1px solid var(--rule);
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 0.9rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .contact-channel:hover {
+      border-color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    .contact-channel-icon {
+      font-size: 1.2rem;
+      width: 2rem;
+      text-align: center;
+    }
+
+    .contact-channel-label {
+      font-weight: 400;
+      color: var(--muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+      display: block;
+      margin-bottom: 0.1rem;
+    }
+
+    .contact-channel-value {
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    /* ── FORM ── */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .form-input,
+    .form-textarea {
+      background: var(--cream);
+      border: 1px solid var(--rule);
+      padding: 0.9rem 1.2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 130px;
+    }
+
+    .form-submit {
+      padding: 1rem 2.2rem;
+      background: var(--accent);
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      align-self: flex-start;
+    }
+
+    .form-submit:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      padding: 2.5rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--cream);
+      font-weight: 700;
+    }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: rgba(245, 240, 232, 0.35);
+    }
+
+    /* ── ANIMATIONS ── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
+      from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .fade-in {
+    .reveal {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(24px);
       transition: opacity 0.7s ease, transform 0.7s ease;
     }
 
-    .fade-in.visible {
+    .reveal.visible {
       opacity: 1;
       transform: translateY(0);
     }
 
-    /* RESPONSIVE */
-    @media (max-width: 700px) {
-      nav { padding: 16px 20px; }
-      .form-row { flex-direction: column; }
-      .who-inner { grid-template-columns: 1fr; }
-      footer { justify-content: center; text-align: center; }
-      .counter-wrap { gap: 32px; }
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 2rem; }
+      .nav-links { gap: 1.5rem; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 7rem 2.5rem 4rem; }
+      .hero-right { padding: 3rem 2.5rem 5rem; }
+      .about-inner,
+      .contact-inner { grid-template-columns: 1fr; gap: 3rem; padding: 0 2rem; }
+      section { padding: 5rem 2rem; }
+      .samples-inner,
+      .testimonials-inner { padding: 0 2rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .samples-grid,
+      .testimonials-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 0.8rem; text-align: center; padding: 2rem; }
     }
   </style>
 </head>
 <body>
 
+  <!-- NAV -->
   <nav>
-    <span class="nav-logo">@ATLtheINDUSTRY</span>
-    <span class="nav-tag">Job Board — Coming Soon</span>
+    <a href="#" class="nav-logo">Thomas Myers</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
   </nav>
 
   <!-- HERO -->
-  <section class="hero">
-    <div class="badge"><span></span> Now Taking Early Signups</div>
-
-    <h1>ATL<em>Industry</em>Job Board</h1>
-
-    <p class="hero-sub">
-      The <strong>first dedicated hiring platform</strong> for Atlanta's hospitality industry. 
-      Built by someone who's been behind the bar for 20 years.
-    </p>
-
-    <div class="signup-wrap">
-
-      <!-- ROLE SELECTOR -->
-      <div class="role-select">
-        <button class="role-btn active" onclick="setRole(this, 'Job Seeker')">🍸 Looking for Work</button>
-        <button class="role-btn" onclick="setRole(this, 'Employer')">🏪 Hiring Staff</button>
-        <button class="role-btn" onclick="setRole(this, 'Both')">🤝 Both</button>
-      </div>
-
-      <div id="signup-form">
-        <div class="form-row">
-          <input type="text" id="firstName" placeholder="First Name" />
-          <input type="text" id="lastName" placeholder="Last Name" />
-        </div>
-        <div class="form-row">
-          <input type="email" id="email" placeholder="Email Address" />
-        </div>
-        <div class="form-row">
-          <select id="jobType">
-            <option value="" disabled selected>Your Role in the Industry</option>
-            <option>Bartender</option>
-            <option>Server</option>
-            <option>Bar Manager / GM</option>
-            <option>Host / Hostess</option>
-            <option>Barback</option>
-            <option>Busser</option>
-            <option>Kitchen Staff</option>
-            <option>Event Staff</option>
-            <option>Owner / Operator</option>
-            <option>Venue Manager / HR</option>
-            <option>Industry Adjacent</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <button class="submit-btn" onclick="handleSubmit()">JOIN THE WAITLIST</button>
-        <p class="form-note">No spam. Ever. Just early access when we launch.</p>
-      </div>
-
-      <div class="success-box" id="success-box">
-        <div class="check">🥃</div>
-        <h3>You're In, Fam.</h3>
-        <p>Welcome to the ATL Industry family. You'll be among the first to know when we launch. Tell your crew — the more of us, the better.</p>
-      </div>
-
+  <div class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Copywriter &amp; Brand Voice Strategist</p>
+      <h1 class="hero-headline">Words that<br>actually <em>sound</em><br>like you.</h1>
+      <p class="hero-sub">Most copy sounds like it came from a template. Yours won't. I write for businesses that have a real personality and want their customers to feel it.</p>
+      <a href="#contact" class="hero-cta">Let's Talk</a>
     </div>
-  </section>
-
-  <!-- COUNTER -->
-  <div class="counter-section fade-in">
-    <div class="counter-wrap">
-      <div class="counter-item">
-        <span class="counter-num" id="count-signups">0</span>
-        <span class="counter-label">Early Signups</span>
-      </div>
-      <div class="counter-item">
-        <span class="counter-num">20+</span>
-        <span class="counter-label">Years in ATL Hospitality</span>
-      </div>
-      <div class="counter-item">
-        <span class="counter-num">ATL</span>
-        <span class="counter-label">Home Base</span>
+    <div class="hero-right">
+      <div class="hero-stat-block">
+        <div class="hero-stat">
+          <div class="stat-number">20+</div>
+          <div class="stat-label">Years in the hospitality industry — I know service culture from the inside out.</div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-number">ATL</div>
+          <div class="stat-label">Based in Atlanta. Writing for businesses everywhere.</div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-number">0</div>
+          <div class="stat-label">Generic templates. Every piece is written for your brand, your voice, your people.</div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- WHY SECTION -->
-  <section class="why-section fade-in">
-    <p class="section-label">The Problem We're Solving</p>
-    <h2 class="section-title">The Industry Deserves<br>Its Own Platform.</h2>
+  <!-- ABOUT -->
+  <div class="about-section" id="about">
+    <div class="about-inner">
+      <div class="about-text reveal">
+        <div class="section-rule">
+          <span class="section-eyebrow">About</span>
+        </div>
+        <h2 class="section-headline">I spent 20 years learning what<br><em>keeps people coming back.</em></h2>
+        <p>Before I wrote a word of copy, I spent two decades in Atlanta's hospitality industry — behind the bar, managing teams, and running the operation as a GM. I learned something in those years that no marketing textbook teaches: <strong>people don't come back for the product. They come back for how you make them feel.</strong></p>
+        <p>That's what I bring to every piece of writing I do. Whether it's an email campaign for a neighborhood bar, a content series for a fitness brand, or outreach copy for a service business — I write copy that's specific, honest, and sounds like it actually came from you.</p>
+        <p>If your copy sounds like it could belong to any business, it belongs to none of them. Let's change that.</p>
+      </div>
+      <div class="about-pull reveal">
+        "Most businesses know what they do. Very few know how to say it in a way that makes someone feel something. That gap is where I work."
+      </div>
+    </div>
+  </div>
 
-    <div class="cards-grid">
-      <div class="card">
-        <span class="card-icon">⚡</span>
-        <h3>Last-Minute Shifts</h3>
-        <p>Somebody calls out at 4pm. Right now there's nowhere to go. ATL Industry Job Board will have a real-time shift coverage feature built for our world.</p>
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-rule reveal">
+      <span class="section-eyebrow">Services</span>
+    </div>
+    <h2 class="section-headline reveal">What I do.</h2>
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <div class="service-icon">✉️</div>
+        <div class="service-title">Email Marketing</div>
+        <div class="service-desc">Sequences, campaigns, and newsletters that sound like they came from a person — because they did. Built to keep your customers engaged and coming back.</div>
       </div>
-      <div class="card">
-        <span class="card-icon">🤝</span>
-        <h3>Built by Industry, For Industry</h3>
-        <p>No corporate job board. No temp agency. This is built by someone who's poured drinks, managed floors, and knows every bar in this city personally.</p>
+      <div class="service-card">
+        <div class="service-icon">📣</div>
+        <div class="service-title">Brand Voice & Messaging</div>
+        <div class="service-desc">If you've ever struggled to explain what makes you different, this is where we start. I help you find the words that are uniquely, unmistakably yours.</div>
       </div>
-      <div class="card">
-        <span class="card-icon">📍</span>
-        <h3>Atlanta First</h3>
-        <p>Starting right here at home — then going national. Every venue, every role, every corner of ATL's hospitality scene. One place.</p>
+      <div class="service-card">
+        <div class="service-icon">📱</div>
+        <div class="service-title">Social & Content Copy</div>
+        <div class="service-desc">Captions, posts, and content series that build community instead of just filling a feed. Real voice, real engagement.</div>
       </div>
-      <div class="card">
-        <span class="card-icon">🏃</span>
-        <h3>Fast Connections</h3>
-        <p>Bartenders, servers, and managers don't browse job boards all day. This platform is built for speed — fast posts, fast responses, fast hires.</p>
+      <div class="service-card">
+        <div class="service-icon">🍺</div>
+        <div class="service-title">Hospitality Copywriting</div>
+        <div class="service-desc">Bars, restaurants, and hospitality brands are my home turf. I write for this world the way someone who's lived it writes — because I have.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🚀</div>
+        <div class="service-title">Launch & Outreach Copy</div>
+        <div class="service-desc">Cold outreach, launch sequences, and sales emails that open doors without feeling like a pitch. Conversational. Direct. Effective.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💬</div>
+        <div class="service-title">Website Copy</div>
+        <div class="service-desc">Your website is often the first impression. I write pages that get to the point, sound like you, and give people a reason to keep reading.</div>
       </div>
     </div>
   </section>
 
-  <!-- WHO IS IT FOR -->
-  <section class="who-section fade-in">
-    <div class="who-inner">
-      <div class="who-block">
-        <h3>For Workers</h3>
-        <ul class="who-list">
-          <li>Find full-time, part-time, and seasonal hospitality gigs in Atlanta</li>
-          <li>Pick up last-minute shifts when you need extra cash</li>
-          <li>Build a hospitality profile that actually shows your experience</li>
-          <li>Connect with Atlanta venues that are hiring right now</li>
-          <li>Be first to know about new openings before they're posted anywhere else</li>
-        </ul>
+  <!-- SAMPLES -->
+  <div class="samples-section" id="work">
+    <div class="samples-inner">
+      <div class="section-rule reveal">
+        <span class="section-eyebrow">Work</span>
       </div>
-      <div class="who-block">
-        <h3>For Venues</h3>
-        <ul class="who-list">
-          <li>Post jobs directly to Atlanta's hospitality workforce</li>
-          <li>Fill last-minute shift gaps fast without blowing up your group chat</li>
-          <li>Find pre-vetted candidates who understand the industry</li>
-          <li>List your venue on Atlanta's premier hospitality community platform</li>
-          <li>Build your employer brand with the people who actually work in the industry</li>
-        </ul>
+      <h2 class="section-headline reveal">Writing that does something.</h2>
+      <div class="samples-grid reveal">
+        <div class="sample-card">
+          <span class="sample-tag">Newsletter</span>
+          <h3 class="sample-title">Loud Music, Beer & A New Hype Drop — Hop City Beer & Wine</h3>
+          <p class="sample-excerpt">Co-wrote Hop City's weekly newsletter with the Krog Bar manager — a personality-driven deep dive into beer and cider pairings matched with music. The kind of copy that makes you feel like you're talking to a real person, not a brand.</p>
+          <p class="sample-client">Hop City Beer & Wine / Newsletter — July 2025</p>
+        </div>
+        <div class="sample-card">
+          <span class="sample-tag">Brand Storytelling</span>
+          <h3 class="sample-title">From Dishwasher to James Beard Award Winner — The Busy Bee Cafe</h3>
+          <p class="sample-excerpt">A profile of Tracy Gates and Atlanta's most iconic soul food institution. Written for @atltheindustry's ATL Industry History Series — the kind of storytelling that makes people feel the weight of a place before they ever walk through the door.</p>
+          <p class="sample-client">@atltheindustry / ATL Industry History Series</p>
+        </div>
+        <div class="sample-card">
+          <span class="sample-tag">Cold Outreach</span>
+          <h3 class="sample-title">Outreach Copy — Atlanta Hospitality Venues</h3>
+          <p class="sample-excerpt">Conversational cold outreach written for bars and restaurants across Atlanta — personal, specific, and built to start real conversations. The kind of message that gets read because it doesn't sound like marketing.</p>
+          <p class="sample-client">Hospitality / Outreach Copy</p>
+        </div>
+        <div class="sample-card">
+          <span class="sample-tag">Coming Soon</span>
+          <h3 class="sample-title">More Work on the Way</h3>
+          <p class="sample-excerpt">This portfolio is growing. If you want to see something specific — an email sequence, a brand voice sample, a social series — just ask. Happy to put something together for your industry.</p>
+          <p class="sample-client">Get in touch below ↓</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW I WORK -->
+  <section id="how">
+    <div class="section-rule reveal">
+      <span class="section-eyebrow">Process</span>
+    </div>
+    <h2 class="section-headline reveal">How I work.</h2>
+    <p class="reveal" style="color:var(--muted);font-size:0.95rem;margin-bottom:3rem;font-weight:300;">Three steps. No surprises.</p>
+    <div class="services-grid reveal" style="grid-template-columns:repeat(3,1fr);">
+      <div class="service-card">
+        <div class="service-icon" style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--accent);font-weight:900;">01</div>
+        <div class="service-title">We Talk</div>
+        <div class="service-desc">A quick 15-minute conversation about your business, your voice, and what you actually need. No pitch, no pressure. Just two people figuring out if it's a fit.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon" style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--accent);font-weight:900;">02</div>
+        <div class="service-title">I Write</div>
+        <div class="service-desc">I get to work. Every piece is written specifically for you — your brand, your customers, your voice. No templates, no shortcuts.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon" style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--accent);font-weight:900;">03</div>
+        <div class="service-title">You Approve</div>
+        <div class="service-desc">Nothing goes out without your sign-off. You review everything, we refine if needed, and you stay in control of your brand the whole way through.</div>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER CTA -->
-  <section class="footer-cta fade-in">
-    <h2>Get In Early.<br>Tell Your People.</h2>
-    <p>Share this page with everyone you know in the industry. The bigger we are at launch, the better it works for all of us.</p>
-    <button class="submit-btn" onclick="document.querySelector('.hero').scrollIntoView({behavior:'smooth'})">SIGN UP NOW — IT'S FREE</button>
-  </section>
+  <!-- TESTIMONIALS -->
+  <div class="testimonials-section">
+    <div class="testimonials-inner">
+      <div class="section-rule reveal">
+        <span class="section-eyebrow">Kind Words</span>
+      </div>
+      <h2 class="section-headline reveal">What people say.</h2>
+      <div class="testimonials-grid reveal">
+        <div class="testimonial-card">
+          <div class="testimonial-quote" style="opacity:0.2">"</div>
+          <p class="testimonial-text testimonial-placeholder">Testimonials are earned, not invented. This space is reserved for real clients with real results. That list is growing — check back soon.</p>
+          <p class="testimonial-author" style="opacity:0.3">— Coming soon</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote" style="opacity:0.2">"</div>
+          <p class="testimonial-text testimonial-placeholder">Want to be the first? Reach out below and let's build something worth talking about.</p>
+          <p class="testimonial-author" style="opacity:0.3">— Your business here</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote" style="opacity:0.2">"</div>
+          <p class="testimonial-text testimonial-placeholder">More testimonials coming soon. Want to be first? Let's work together.</p>
+          <p class="testimonial-author" style="opacity:0.3">— Your business here</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote" style="opacity:0.2">"</div>
+          <p class="testimonial-text testimonial-placeholder">Every new client relationship starts somewhere. Reach out and let's build something worth talking about.</p>
+          <p class="testimonial-author" style="opacity:0.3">— Your business here</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="contact-section" id="contact">
+    <div class="contact-inner">
+      <div class="contact-left reveal">
+        <div class="section-rule">
+          <span class="section-eyebrow">Contact</span>
+        </div>
+        <h2 class="section-headline">Let's figure out<br>if we're a <em>fit.</em></h2>
+        <p>No pressure, no pitch. Just a quick conversation about what you're working on and whether I can help. Fifteen minutes is usually enough to know.</p>
+        <div class="contact-channels">
+          <a href="mailto:atltheindustry@gmail.com" class="contact-channel">
+            <span class="contact-channel-icon">✉️</span>
+            <div>
+              <span class="contact-channel-label">Email</span>
+              <span class="contact-channel-value">atltheindustry@gmail.com</span>
+            </div>
+          </a>
+          <a href="https://instagram.com/atltheindustry" target="_blank" class="contact-channel">
+            <span class="contact-channel-icon">📸</span>
+            <div>
+              <span class="contact-channel-label">Instagram</span>
+              <span class="contact-channel-value">@atltheindustry</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="reveal">
+        <form class="contact-form" onsubmit="handleSubmit(event)">
+          <div class="form-group">
+            <label class="form-label" for="name">Your Name</label>
+            <input class="form-input" type="text" id="name" placeholder="First and last name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="business">Business / Brand</label>
+            <input class="form-input" type="text" id="business" placeholder="What's the name of your business?">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email">Email Address</label>
+            <input class="form-input" type="email" id="email" placeholder="Where should I reply?" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="message">What are you working on?</label>
+            <textarea class="form-textarea" id="message" placeholder="Tell me a little about your business and what you need. No need to be formal." required></textarea>
+          </div>
+          <button type="submit" class="form-submit">Send It →</button>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <!-- FOOTER -->
   <footer>
-    <span class="logo">@ATLtheINDUSTRY</span>
-    <p>© 2026 ATL Industry — <a href="https://www.instagram.com/atltheindustry" target="_blank">Instagram</a></p>
-    <p>Built in Atlanta. For Atlanta.</p>
+    <span class="footer-name">Thomas Myers — Copywriter</span>
+    <span class="footer-copy">© 2026. Atlanta, Georgia.</span>
   </footer>
 
   <script>
-    // ROLE SELECTION
-    let selectedRole = 'Job Seeker';
-    function setRole(btn, role) {
-      document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      selectedRole = role;
-    }
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
 
-    // SIGNUP COUNTER from localStorage simulation
-    let signupCount = parseInt(localStorage.getItem('atl_signups') || '47');
-
-    function updateCounter() {
-      const el = document.getElementById('count-signups');
-      const target = signupCount;
-      let current = 0;
-      const step = Math.ceil(target / 60);
-      const timer = setInterval(() => {
-        current = Math.min(current + step, target);
-        el.textContent = current;
-        if (current >= target) clearInterval(timer);
-      }, 20);
-    }
-
-    // FORM SUBMIT
-    async function handleSubmit() {
-      const first = document.getElementById('firstName').value.trim();
-      const last = document.getElementById('lastName').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const role = document.getElementById('jobType').value;
-
-      if (!first || !email || !role) {
-        alert('Please fill in your first name, email, and role to join the waitlist.');
-        return;
-      }
-
-      if (!email.includes('@')) {
-        alert('Please enter a valid email address.');
-        return;
-      }
-
+    // Form
+    async function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.form-submit');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
       try {
-        const response = await fetch('https://formspree.io/f/mnjbweok', {
+        const res = await fetch('https://formspree.io/f/mnjbweok', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            firstName: first,
-            lastName: last,
-            email: email,
-            role: role,
-            type: selectedRole
+            name: document.getElementById('name').value,
+            business: document.getElementById('business').value,
+            email: document.getElementById('email').value,
+            message: document.getElementById('message').value
           })
         });
-
-        if (response.ok) {
-          // Increment counter
-          signupCount++;
-          localStorage.setItem('atl_signups', signupCount);
-          document.getElementById('count-signups').textContent = signupCount;
-
-          // Show success
-          document.getElementById('signup-form').style.display = 'none';
-          document.getElementById('success-box').style.display = 'block';
+        if (res.ok) {
+          btn.textContent = 'Message Sent ✓';
+          btn.style.background = '#2a7a4b';
+          e.target.reset();
         } else {
-          alert('Something went wrong. Please try again.');
+          btn.textContent = 'Try Again';
+          btn.disabled = false;
         }
-      } catch (error) {
-        alert('Something went wrong. Please try again.');
+      } catch {
+        btn.textContent = 'Try Again';
+        btn.disabled = false;
       }
     }
-
-    // SCROLL ANIMATIONS
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) e.target.classList.add('visible');
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-    // Animate counter when visible
-    const counterSection = document.querySelector('.counter-section');
-    let counted = false;
-    const counterObserver = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && !counted) {
-        counted = true;
-        updateCounter();
-      }
-    });
-    counterObserver.observe(counterSection);
   </script>
-
 </body>
 </html>
